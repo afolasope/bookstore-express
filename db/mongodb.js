@@ -3,11 +3,14 @@ const CONFIG = require('../config/config');
 
 function dbConnect() {
   mongoose.connect(CONFIG.MONGODB_URL);
+//   mongoose.set('strictQuery', true);
 
-  mongoose.connect.on('connected', () => {
+  mongoose.connection.on('connected', () => {
     console.log('connection successful');
   });
-  mongoose.connect.on('error', () => {
+  mongoose.connection.on('error', () => {
     console.log('error connecting');
   });
 }
+
+module.exports = dbConnect;
