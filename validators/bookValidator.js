@@ -8,6 +8,7 @@ const BookSchema = Joi.object({
   price: Joi.number().min(0).required(),
   createdAt: Joi.date().default(Date.now),
   lastUpdatedAt: Joi.date().default(Date.now),
+  isbn: Joi.string().max(13).min(10).required(),
 });
 
 async function BookValidationMW(req, res, next) {
@@ -16,6 +17,8 @@ async function BookValidationMW(req, res, next) {
     await BookSchema.validateAsync(bookPayload);
     next();
   } catch (error) {
-    next(error.details[0].message);
+    next(error);
   }
 }
+
+module.exports = { BookValidationMW };
